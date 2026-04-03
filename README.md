@@ -22,6 +22,7 @@ POST https://hcl-document-processor.onrender.com/process
 | file | file | PDF/DOCX/Image file |
 
 ## Response Format
+
 ```json
 {
   "fileName": "document.pdf",
@@ -39,7 +40,7 @@ POST https://hcl-document-processor.onrender.com/process
 }
 
 
-## AI Tools Used
+AI Tools Used
 spaCy (en_core_web_sm) - Named Entity Recognition
 
 Tesseract OCR - Text extraction from images
@@ -69,20 +70,13 @@ Tesseract OCR installed
 
 Installation
 bash
-# Clone repository
 git clone https://github.com/GajapriyaGowtham/hcl-document-processor.git
 cd hcl-document-processor
-
-# Install dependencies
 pip install -r requirements.txt
-
-# Download spaCy model
 python -m spacy download en_core_web_sm
-
-# Run the server
 python app.py
-For Windows (Tesseract OCR)
-Download and install from: https://github.com/UB-Mannheim/tesseract/wiki
+Windows Tesseract OCR
+Download from: https://github.com/UB-Mannheim/tesseract/wiki
 
 Supported Formats
 Format	Extension
@@ -162,4 +156,3 @@ Author: Gajapriya Gowtham
 
 License
 This project was created for the HCL Hackathon submission.
-

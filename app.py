@@ -27,10 +27,10 @@ VALID_API_KEYS = {"hcl_hackathon_2026"}
 @app.post("/process")
 async def process_document(
     file: UploadFile = File(...),
-    api_key: str = Header(...)
+    x_api_key: str = Header(..., alias="x-api-key")
 ):
     # 1. Validate API key
-    if api_key not in VALID_API_KEYS:
+    if x_api_key not in VALID_API_KEYS:
         raise HTTPException(status_code=401, detail="Invalid API Key")
     
     # 2. Get filename
@@ -64,7 +64,7 @@ async def process_document(
         
         # 7. Return response
         return {
-            "filename": filename,
+            "fileName": filename,
             "summary": summary,
             "entities": entities,
             "sentiment": sentiment["sentiment"],

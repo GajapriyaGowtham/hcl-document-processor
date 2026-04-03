@@ -39,7 +39,7 @@ POST https://hcl-document-processor.onrender.com/process
 }
 
 
-# AI Tools Used
+## AI Tools Used
 spaCy (en_core_web_sm) - Named Entity Recognition
 
 Tesseract OCR - Text extraction from images
@@ -163,23 +163,3 @@ Author: Gajapriya Gowtham
 License
 This project was created for the HCL Hackathon submission.
 
-text
-
----
-
-## ✅ **After Pasting**
-
-1. Scroll down
-2. Click **"Commit changes"** (green button)
-3. Your README is now updated!
-
----
-
-## 📍 **Where This Will Appear**
-
-After committing, your GitHub repository will show this nicely formatted README at:
-`https://github.com/GajapriyaGowtham/hcl-document-processor`
-
----
-
-**Done! Now your README has all required sections including AI Tools disclosure! 🚀**

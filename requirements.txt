@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-multipart
+PyPDF2
+python-docx
+pytesseract
+pillow
+spacy
+flask
+flask-cors

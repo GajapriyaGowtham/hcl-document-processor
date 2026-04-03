@@ -37,7 +37,9 @@ POST https://hcl-document-processor.onrender.com/process
   "sentiment_confidence": 0.95,
   "word_count": 150
 }
-AI Tools Used
+
+
+# AI Tools Used
 spaCy (en_core_web_sm) - Named Entity Recognition
 
 Tesseract OCR - Text extraction from images

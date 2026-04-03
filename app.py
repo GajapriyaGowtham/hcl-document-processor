@@ -20,26 +20,22 @@ app.add_middleware(
 
 VALID_API_KEYS = {"hcl_hackathon_2026"}
 
-# ✅ IMPORTANT: This MUST be POST method
 @app.post("/process")
 async def process_document(
     file: UploadFile = File(...),
     x_api_key: str = Header(..., alias="x-api-key")
 ):
-    # Validate API key
     if x_api_key not in VALID_API_KEYS:
         raise HTTPException(status_code=401, detail="Invalid API Key")
     
     filename = file.filename.lower()
     
-    # Save file temporarily
     with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(filename)[1]) as tmp:
         content = await file.read()
         tmp.write(content)
         tmp_path = tmp.name
     
     try:
-        # Extract text based on file type
         if filename.endswith('.pdf'):
             text = extract_from_pdf(tmp_path)
         elif filename.endswith('.docx'):
@@ -52,12 +48,10 @@ async def process_document(
         if not text or len(text.strip()) < 10:
             raise HTTPException(status_code=422, detail="No readable text found")
         
-        # AI Processing
         summary = generate_summary(text)
         entities = extract_entities(text)
         sentiment = analyze_sentiment(text)
         
-        # ✅ Correct response format
         return {
             "fileName": filename,
             "summary": summary,
@@ -74,10 +68,8 @@ async def process_document(
 async def root():
     return {
         "service": "HCL Document Intelligence",
-        "version": "1.0",
         "api_key": "hcl_hackathon_2026",
-        "endpoint": "POST /process",
-        "docs": "/docs"
+        "endpoint": "POST /process"
     }
 
 @app.get("/health")

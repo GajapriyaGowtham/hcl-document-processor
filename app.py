@@ -1,5 +1,4 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException, Header
-from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os
@@ -10,10 +9,8 @@ from ai_summary import generate_summary
 from ai_entities import extract_entities
 from ai_sentiment import analyze_sentiment
 
-# Create FastAPI app
 app = FastAPI(title="HCL Document Intelligence API")
 
-# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -21,29 +18,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Your API Key
 VALID_API_KEYS = {"hcl_hackathon_2026"}
 
+# ✅ IMPORTANT: This MUST be POST method
 @app.post("/process")
 async def process_document(
     file: UploadFile = File(...),
     x_api_key: str = Header(..., alias="x-api-key")
 ):
-    # 1. Validate API key
+    # Validate API key
     if x_api_key not in VALID_API_KEYS:
         raise HTTPException(status_code=401, detail="Invalid API Key")
     
-    # 2. Get filename
     filename = file.filename.lower()
     
-    # 3. Save file temporarily
+    # Save file temporarily
     with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(filename)[1]) as tmp:
         content = await file.read()
         tmp.write(content)
         tmp_path = tmp.name
     
     try:
-        # 4. Extract text based on file type
+        # Extract text based on file type
         if filename.endswith('.pdf'):
             text = extract_from_pdf(tmp_path)
         elif filename.endswith('.docx'):
@@ -53,16 +49,15 @@ async def process_document(
         else:
             raise HTTPException(status_code=400, detail="Unsupported file type")
         
-        # 5. Check if text extracted
         if not text or len(text.strip()) < 10:
             raise HTTPException(status_code=422, detail="No readable text found")
         
-        # 6. Apply AI
+        # AI Processing
         summary = generate_summary(text)
         entities = extract_entities(text)
         sentiment = analyze_sentiment(text)
         
-        # 7. Return response
+        # ✅ Correct response format
         return {
             "fileName": filename,
             "summary": summary,
@@ -90,12 +85,4 @@ async def health():
     return {"status": "healthy"}
 
 if __name__ == "__main__":
-    print("\n" + "="*50)
-    print("🚀 HCL Document Intelligence API (FastAPI)")
-    print("="*50)
-    print("📍 API URL: http://localhost:8000")
-    print("🔑 API Key: hcl_hackathon_2026")
-    print("📖 Interactive Docs: http://localhost:8000/docs")
-    print("="*50 + "\n")
-    
     uvicorn.run(app, host="0.0.0.0", port=8000)

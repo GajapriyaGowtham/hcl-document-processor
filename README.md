@@ -44,6 +44,7 @@ POST https://hcl-document-processor.onrender.com/process
 - **Tesseract OCR** - Text extraction from images
 - **Custom algorithms** - Summarization using sentence scoring
 - **Custom algorithms** - Sentiment analysis using keyword matching
+- **ChatGPT (OpenAI)** - Code suggestions and problem-solving assistance
 
 ## Tech Stack
 

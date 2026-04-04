@@ -1,4 +1,4 @@
-# ai_summary.py - Add this clean_text function
+# ai_summary.py 
 import re
 from collections import Counter
 
